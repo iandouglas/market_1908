@@ -35,12 +35,11 @@ class Market
   end
 
   def sell(item, quantity)
-    return false unless total_inventory.key? item
     return false if total_inventory[item] < quantity
 
     vendors_that_sell(item).each do |vendor|
       new_quantity = [vendor.check_stock(item), quantity].min
-      vendor.sell(item, new_quantity)
+      vendor.stock(item, new_quantity * -1)
       quantity -= new_quantity
       if quantity == 0
         break
