@@ -82,7 +82,7 @@ class MarketTest < Minitest::Test
     expected = {"Peaches"=>50, "Tomatoes"=>7, "Banana Nice Cream"=>45, "Peach-Raspberry Nice Cream"=>25}
     assert_equal expected, @market.total_inventory
     assert_equal 0, @vendor_1.check_stock("Peaches")
-    assert_equal 50, @vendor_1.check_stock("Peaches")
+    assert_equal 50, @vendor_3.check_stock("Peaches")
   end
 
 
