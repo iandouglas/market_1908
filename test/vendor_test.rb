@@ -31,4 +31,11 @@ class VendorTest < Minitest::Test
     expected = {"Peaches"=>55, "Tomatoes"=>12}
     assert expected, @vendor.inventory
   end
+
+  def test_sell_item_quantity
+    @vendor.stock("Peaches", 55)
+    @vendor.sell("Peaches", 10)
+
+    assert_equal 45, @vendor.check_stock("Peaches")
+  end
 end
