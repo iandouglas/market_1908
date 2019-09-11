@@ -31,6 +31,4 @@ class VendorTest < Minitest::Test
     expected = {"Peaches"=>55, "Tomatoes"=>12}
     assert expected, @vendor.inventory
   end
-
-
 end

@@ -37,20 +37,51 @@ class MarketTest < Minitest::Test
   end
 
   def test_vendor_names
-    @market.add_vendor(@vendor_1)
-    @market.add_vendor(@vendor_2)
-    @market.add_vendor(@vendor_3)
+    add_vendors
 
     assert_equal [@vendor_1.name, @vendor_2.name, @vendor_3.name], @market.vendor_names
   end
 
   def test_vendors_that_sell_item
-    @market.add_vendor(@vendor_1)
-    @market.add_vendor(@vendor_2)
-    @market.add_vendor(@vendor_3)
+    add_vendors
 
     assert_equal [@vendor_1, @vendor_3], @market.vendors_that_sell("Peaches")
     assert_equal [@vendor_2], @market.vendors_that_sell("Banana Nice Cream")
     assert_equal [], @market.vendors_that_sell("Poutine")
+  end
+
+  def test_sorted_item_list
+    add_vendors
+
+    expected = ["Banana Nice Cream", "Peach-Raspberry Nice Cream", "Peaches", "Tomatoes"]
+    assert_equal expected, @market.sorted_item_list
+  end
+
+  def test_total_inventory
+    add_vendors
+
+    expected = {"Peaches"=>100, "Tomatoes"=>7, "Banana Nice Cream"=>50, "Peach-Raspberry Nice Cream"=>25}
+    assert_equal expected, @market.total_inventory
+  end
+
+  def test_cannot_sell_items
+    add_vendors
+
+    assert_equal false, @market.sell("Peaches", 200)
+    assert_equal false, @market.sell("Onions", 1)
+  end
+
+  def test_can_sell_items
+    add_vendors
+
+    assert_equal true, @market.sell("Banana Nice Cream", 5)
+  end
+
+
+  # --- helpers ---
+  def add_vendors
+    @market.add_vendor(@vendor_1)
+    @market.add_vendor(@vendor_2)
+    @market.add_vendor(@vendor_3)
   end
 end
